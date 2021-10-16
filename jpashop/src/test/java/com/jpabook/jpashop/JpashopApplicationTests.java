@@ -8,6 +8,9 @@ class JpashopApplicationTests {
 
 	@Test
 	void contextLoads() {
+
+
+		System.out.println("hello world");
 	}
 
 }
