@@ -1,5 +1,6 @@
 package com.jpabook.jpashop.domain;
 
+import com.jpabook.jpashop.domain.item.Member;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

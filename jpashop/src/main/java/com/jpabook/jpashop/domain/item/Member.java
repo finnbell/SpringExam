@@ -1,6 +1,9 @@
-package com.jpabook.jpashop.domain;
+package com.jpabook.jpashop.domain.item;
 
 
+import com.jpabook.jpashop.domain.Address;
+import com.jpabook.jpashop.domain.Order;
+import com.jpabook.jpashop.domain.OrderItem;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,9 +24,9 @@ public class Member {
     @Embedded
     private Address address;
 
-
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
+
 
 }
 

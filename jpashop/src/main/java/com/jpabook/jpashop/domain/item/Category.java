@@ -27,13 +27,21 @@ public class Category {
     private List<Item> items = new ArrayList<>();
 
 
-    @ManyToOne
+    @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name="parent_id")
     private Category parent;
 
     @OneToMany(mappedBy="parent")
     private List<Category> categories = new ArrayList<>();
 
+    @OneToMany(mappedBy = "parent")
+    private List<Category> child = new ArrayList<>();
 
+    // == 연관관계 메서드 ==//
+    public addChildCategory(Category category) {
+        this.child.add(category);
+        child.setParent(this);
+
+    }
 
 }

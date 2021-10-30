@@ -1,6 +1,7 @@
 package com.jpabook.jpashop.domain;
 
 import com.jpabook.jpashop.domain.item.Delivery;
+import com.jpabook.jpashop.domain.item.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +21,7 @@ public class Order {
     private Long id;
 
 
-    @ManyToOne
+    @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -33,10 +34,31 @@ public class Order {
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
+    //order_date
     private LocalDateTime orderDate;  //주문 시간
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;   // 주문상태 [ORDER, CANCEL]
 
 
+    //== 연관관계 메서드 == //
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<>();
+
+    public void setMember(Member member) {
+        this.member = member;
+        member.getOrders().add(this);
+    }
+
+    public void addOrderItem(OrderItem orderItem) {
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
+
 }
+
