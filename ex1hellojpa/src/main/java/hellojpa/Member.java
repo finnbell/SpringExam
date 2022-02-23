@@ -9,7 +9,8 @@ import java.util.Date;
 @TableGenerator( name = "MEMBER_SEQ_GENERATOR",
         table = "MY_SEQUENCES",
         pkColumnValue = "MEMBER_SEQ",
-        allocationSize = 1)
+        initialValue = 1,
+        allocationSize = 50)
 public class Member {
 
     @Id
