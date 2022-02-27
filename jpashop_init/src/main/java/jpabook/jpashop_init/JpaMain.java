@@ -1,10 +1,15 @@
-package jpabook.jpashop_init.domain;
+package jpabook.jpashop_init;
+
+import jpabook.jpashop_init.domain.Item;
+import jpabook.jpashop_init.domain.Member;
+import jpabook.jpashop_init.domain.Movie;
+import jpabook.jpashop_init.domain.Team;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
+import java.time.LocalDateTime;
 
 public class JpaMain {
 
@@ -16,27 +21,15 @@ public class JpaMain {
         tx.begin();
 
         try{
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team);
-
             Member member = new Member();
-            member.setUsername("member1");
-            member.setTeam(team);
+            member.setCreatedBy("hong");
+            member.setCreatedDateTime(LocalDateTime.now());
+
             em.persist(member);
 
 
             em.flush();
             em.clear();
-
-            Member findMember = em.find(Member.class, member.getId());
-            List<Member> members = findMember.getTeam().getMembers();
-
-            for(Member m : members)
-            {
-                System.out.println("m = " + m.getUsername());
-            }
-
 
             tx.commit();
         }
