@@ -20,25 +20,16 @@ public class JpaMain {
 
         try{
 
-            Team team = new Team();
-            team.setName("teamA");
-            em.persist(team);
+            Child child1 = new Child();
+            Child child2 = new Child();
 
-            Member member1 = new Member();
-            member1.setUsername("member1");
-            em.persist(member1);
+            Parent parent = new Parent();
+            parent.addChild(child1);
+            parent.addChild(child2);
 
-
-            em.flush();
-            em.clear();
-
-
-            List<Member> member = em.createQuery("select m from Member m ", Member.class)
-                                        .getResultList();
-
-
-
-
+            em.persist(parent);
+//            em.persist(child1);  //cascade 로 인해,  child 는 필요 없음. parent 에서 연쇄적으로 처리 해줌.
+//            em.persist(child2);
 
             tx.commit();
         }
