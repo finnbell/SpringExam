@@ -28,8 +28,16 @@ public class JpaMain {
             parent.addChild(child2);
 
             em.persist(parent);
-//            em.persist(child1);  //cascade 로 인해,  child 는 필요 없음. parent 에서 연쇄적으로 처리 해줌.
-//            em.persist(child2);
+            em.persist(child1);
+            em.persist(child2);
+
+            em.flush();
+            em.clear();
+
+            Parent findParent = em.find(Parent.class, parent.getId());
+            em.remove(findParent);
+
+
 
             tx.commit();
         }
