@@ -17,13 +17,17 @@ public class JpaMain {
 
         try{
 
+            Address address = new Address("city", "street", "10000번지");
+
             Member member = new Member();
             member.setUsername("hello");
-            member.setHomeAddress(new Address("city","street","10000번지"));
-            member.setWorkPeroid(new Period());
-
+            member.setHomeAddress(address);
 
             em.persist(member);
+
+            Address newAddress = new Address("NewCity", address.getCity(), address.getZipcode() );
+            member.setHomeAddress(newAddress);
+
 
             tx.commit();
 
