@@ -26,29 +26,30 @@ public class JpaMain {
             member.getFavoriteFoods().add("족발");
             member.getFavoriteFoods().add("피자");
 
-            member.getAddressHistory().add(new Address("old1", "street1", ""));
-            member.getAddressHistory().add(new Address("old2", "street1", ""));
-            member.getAddressHistory().add(new Address("old3", "street1", ""));
+            member.getAddressHistory().add(new AddressEntity("old1", "street1", ""));
+            member.getAddressHistory().add(new AddressEntity("old2", "street1", ""));
+            member.getAddressHistory().add(new AddressEntity("old3", "street1", ""));
 
             em.persist(member);
 
             em.flush();
             em.clear();
 
-            System.out.println("================== START   =================");
-            Member findMember = em.find(Member.class, member.getId());
-
-            List<Address> addressHistory = findMember.getAddressHistory();
-            for (Address address: addressHistory) {
-                System.out.println("address = " + address.getCity() );
-            }
-
-            Set<String> favoriteFoods = findMember.getFavoriteFoods();
-
-            for (String favoriteFood  : favoriteFoods) {
-                System.out.println("favoriteFood = " + favoriteFood);
-            }
-
+//            System.out.println("================== START   =================");
+//            Member findMember = em.find(Member.class, member.getId());
+//
+//            //homeCity -> newCity
+//            // findMember.getHomeAddress().setCity("newCity");   사용법 에러,  사이드 발생.  값타입 에러..
+//            Address a = findMember.getHomeAddress();
+//            findMember.setHomeAddress(new Address("newCity", a.getStreet(), a.getZipcode()));
+//
+//            //치킨 -> 한식
+//            findMember.getFavoriteFoods().remove("치킨");  //String 은 삭제후   추가해야 함
+//            findMember.getFavoriteFoods().add("한식");
+//
+//
+//            findMember.getAddressHistory().remove(new AddressEntity("old1", "street","10000"));
+//            findMember.getAddressHistory().add(new AddressEntity("newCity1", "street","10000"));
 
 
             tx.commit();
