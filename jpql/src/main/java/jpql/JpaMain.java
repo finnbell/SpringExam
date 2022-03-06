@@ -65,15 +65,15 @@ public class JpaMain {
 //            String query = "select size(t.members) From Team t";
 
 //            String query = "select function('group_concat', m.username) From Member m"; //사용자 정의 함수
-            String query = "select group_concat(m.username) From Member m";
+            String query = "select  m.team From Member m";
 
-            List<String> result = em.createQuery(query, String.class)
+            List<Team> result = em.createQuery(query, Team.class)
                             .getResultList();
 
 
             System.out.println("result.size= " + result.size());
 
-            for (String s : result) {
+            for (Team s : result) {
                 System.out.println("s = " + s);
             }
 
