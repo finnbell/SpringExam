@@ -20,6 +20,7 @@ public class JpaMain {
 
             Member member = new Member();
             member.setUsername("member");
+            member.setType(MemberType.ADMIN);
             member.setAge(10);
 
             member.setTeam(team);
@@ -32,16 +33,22 @@ public class JpaMain {
 //            String query = "select m from Member m left join m.team t" // left join
 //            String query = "select m from Member m, Team t where m.username = t.name";   //cross join
 //            String query = "select m from Member m left join m.team t on t.name = 'teamA'";  //join on
-              String query = "select m from Member m left join Team t on m.username = t.name";
+//              String query = "select m from Member m left join Team t on m.username = t.name";
 
-            List<Member> result = em.createQuery(query, Member.class)
+            String query = "select m.username , 'HELLO', true From Member m "+
+                                "where m.type = :userType";    // jpql.MemberType.ADMIN";
+
+            List<Object[]> result = em.createQuery(query)
+                    .setParameter("userType" , MemberType.ADMIN)
                     .getResultList();
+
 
             System.out.println("result.size= " + result.size());
 
-            for (Member member1 : result) {
-
-                System.out.println("member =" + member1);
+            for (Object[] objects : result) {
+                System.out.println("objects ="+objects[0]);
+                System.out.println("objects ="+objects[1]);
+                System.out.println("objects ="+objects[2]);
 
             }
 
