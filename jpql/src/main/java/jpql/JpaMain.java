@@ -18,13 +18,20 @@ public class JpaMain {
             team.setName("teamA");
             em.persist(team);
 
-            Member member = new Member();
-            member.setUsername("관리자");
-            member.setType(MemberType.ADMIN);
-            member.setAge(10);
+            Member member1 = new Member();
+            member1.setUsername("관리자1");
+            member1.setType(MemberType.ADMIN);
+            member1.setAge(10);
 
-            member.setTeam(team);
-            em.persist(member);
+            em.persist(member1);
+
+            Member member2 = new Member();
+            member2.setUsername("관리자2");
+            member2.setType(MemberType.ADMIN);
+            member2.setAge(10);
+
+            member2.setTeam(team);
+            em.persist(member2);
 
             em.flush();
             em.clear();
@@ -48,8 +55,17 @@ public class JpaMain {
 //            String query = "select coalesce(m.username, '이름 없는 회원') as username " +
 //                            " from Member m ";
 
-            String query = "select nullif(m.username, '관리자')" +
-                           " from Member m ";
+//            String query = "select nullif(m.username, '관리자')" +
+//                           " from Member m ";
+
+//            String query = "select concat('a','b') From Member m";
+//            String query = "select substring(m.username,2,3) From Member m";
+//            String query = "select locate('de','abcdefgf') From Member m";
+//            String query = "select length('abcd') From Member m";
+//            String query = "select size(t.members) From Team t";
+
+//            String query = "select function('group_concat', m.username) From Member m"; //사용자 정의 함수
+            String query = "select group_concat(m.username) From Member m";
 
             List<String> result = em.createQuery(query, String.class)
                             .getResultList();
