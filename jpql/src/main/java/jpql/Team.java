@@ -41,4 +41,8 @@ public class Team {
                 ", name='" + name + '\'' +
                 '}';
     }
+
+    public List<Member> getMembers() {
+        return members;
+    }
 }
