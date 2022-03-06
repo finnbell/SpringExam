@@ -31,8 +31,8 @@ public class JpaMain {
 //            String query = "select m from Member m join m. team t"; // inner join
 //            String query = "select m from Member m left join m.team t" // left join
 //            String query = "select m from Member m, Team t where m.username = t.name";   //cross join
-
-            String query = "select m from Member m left join m.team t on t.name = 'teamA'";
+//            String query = "select m from Member m left join m.team t on t.name = 'teamA'";  //join on
+              String query = "select m from Member m left join Team t on m.username = t.name";
 
             List<Member> result = em.createQuery(query, Member.class)
                     .getResultList();
