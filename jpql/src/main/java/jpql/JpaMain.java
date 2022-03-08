@@ -87,7 +87,7 @@ public class JpaMain {
 //            String query = "select function('group_concat', m.username) From Member m"; //사용자 정의 함수
 //            String query = "select t.members From Team t";
             //language=JPAQL
-            String query = "select distinct t From Team t join fetch t.members ";  //join fetch m.team
+            String query = "select distinct  t From Team t  join fetch t.members ";  //join fetch m.team
 
             List<Team> result = em.createQuery(query, Team.class)
                             .getResultList();
