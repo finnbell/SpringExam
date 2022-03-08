@@ -87,16 +87,21 @@ public class JpaMain {
 //            String query = "select function('group_concat', m.username) From Member m"; //사용자 정의 함수
 //            String query = "select t.members From Team t";
             //language=JPAQL
-            String query = "select distinct  t From Team t  join fetch t.members ";  //join fetch m.team
+//            String query = "select m From Member m where m.team = :team ";  //join fetch m.team
 
-            List<Team> result = em.createQuery(query, Team.class)
-                            .getResultList();
+            List<Member> result  = em.createNamedQuery("Member.findByUsername", Member.class)
+                    .setParameter("username","회원1")
+                    .getResultList();
+
+//            List<Member> result = em.createQuery(query, Member.class)
+//                            .setParameter("team", team1)
+//                            .getResultList();
 
 
             System.out.println("result.size= " + result.size());
 
-            for (Team mem : result) {
-                System.out.println("result = " + mem.getName() + ", " + mem.getMembers() );
+            for (Member mem : result) {
+                System.out.println("result = " + mem );
             }
 
 
