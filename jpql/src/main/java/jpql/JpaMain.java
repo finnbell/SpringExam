@@ -1,7 +1,9 @@
 package jpql;
 
-import javax.persistence.*;
-import java.util.Collection;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import java.util.List;
 
 public class JpaMain {
@@ -15,24 +17,39 @@ public class JpaMain {
 
         try{
 
-            Team team = new Team();
-            em.persist(team);
+            Team team1 = new Team();
+            team1.setName("팀A");
+            em.persist(team1);
 
             Member member1 = new Member();
-            member1.setUsername("관리자1");
-            member1.setTeam(team);
+            member1.setUsername("회원1");
+            member1.setTeam(team1);
 
-            member1.setType(MemberType.ADMIN);
+            member1.setType(MemberType.USER);
             member1.setAge(10);
 
             em.persist(member1);
 
+
+            Team team2 = new Team();
+            team2.setName("팀B");
+            em.persist(team2);
+
+
             Member member2 = new Member();
-            member2.setUsername("관리자2");
-            member2.setType(MemberType.ADMIN);
+            member2.setUsername("회원2");
+            member2.setType(MemberType.USER);
             member2.setAge(10);
-            member2.setTeam(team);
+            member2.setTeam(team2);
             em.persist(member2);
+
+
+            Member member3 = new Member();
+            member3.setUsername("회원3");
+            member3.setType(MemberType.USER);
+            member3.setAge(10);
+            member3.setTeam(team2);
+            em.persist(member3);
 
 
 
@@ -68,16 +85,17 @@ public class JpaMain {
 //            String query = "select size(t.members) From Team t";
 
 //            String query = "select function('group_concat', m.username) From Member m"; //사용자 정의 함수
-            String query = "select t.members From Team t";
+//            String query = "select t.members From Team t";
+            String query = "select m From Member m join fetch m.team ";  //join fetch m.team
 
-            List<Collection> result = em.createQuery(query, Collection.class)
+            List<Member> result = em.createQuery(query, Member.class)
                             .getResultList();
 
 
 //            System.out.println("result.size= " + result.size());
 
-            for (Object o : result) {
-                System.out.println("result = " + o);
+            for (Member mem : result) {
+                System.out.println("result = " + mem.getUsername() + ", " + mem.getTeam() );
             }
 
 
