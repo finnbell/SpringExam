@@ -89,20 +89,21 @@ public class JpaMain {
             //language=JPAQL
 //            String query = "select m From Member m where m.team = :team ";  //join fetch m.team
 
-            List<Member> result  = em.createNamedQuery("Member.findByUsername", Member.class)
-                    .setParameter("username","회원1")
-                    .getResultList();
+//            List<Member> result  = em.createNamedQuery("Member.findByUsername", Member.class)
+//                    .setParameter("username","회원1")
+//                    .getResultList();
 
 //            List<Member> result = em.createQuery(query, Member.class)
 //                            .setParameter("team", team1)
 //                            .getResultList();
 
+            int resultCount = em.createQuery("update Member m set m.age = 20")
+                    .executeUpdate();
 
-            System.out.println("result.size= " + result.size());
 
-            for (Member mem : result) {
-                System.out.println("result = " + mem );
-            }
+            System.out.println("result.size= " + resultCount );
+
+
 
 
 
