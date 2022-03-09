@@ -1,7 +1,5 @@
-package com.jpabook.jpashop.domain.item;
+package com.jpabook.jpashop.domain;
 
-import com.jpabook.jpashop.domain.Address;
-import com.jpabook.jpashop.domain.Order;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +12,6 @@ public class Delivery {
 
     @Id
     @GeneratedValue
-
     private Long id;
 
     @OneToOne(mappedBy = "delivery", fetch = FetchType.LAZY)

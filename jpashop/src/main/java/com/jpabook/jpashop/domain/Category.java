@@ -1,5 +1,6 @@
-package com.jpabook.jpashop.domain.item;
+package com.jpabook.jpashop.domain;
 
+import com.jpabook.jpashop.domain.item.Item;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,17 +32,19 @@ public class Category {
     @JoinColumn(name="parent_id")
     private Category parent;
 
-    @OneToMany(mappedBy="parent")
-    private List<Category> categories = new ArrayList<>();
-
     @OneToMany(mappedBy = "parent")
     private List<Category> child = new ArrayList<>();
 
-    // == 연관관계 메서드 ==//
-    public addChildCategory(Category category) {
-        this.child.add(category);
-        child.setParent(this);
 
+    @OneToMany(mappedBy="parent")
+    private List<Category> categories = new ArrayList<>();
+
+
+
+    // == 연관관계 메서드 == (양방향일때 코드로 세팅)  //
+    public void addChildCategory(Category child) {
+        this.child.add(child);
+        child.setParent(this);
     }
 
 }

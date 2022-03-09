@@ -53,8 +53,8 @@ public class JpaMain {
 
 
 
-            em.flush();
-            em.clear();
+//            em.flush();_
+//            em.clear();
 
 //            String query = "select m from Member m join m. team t"; // inner join
 //            String query = "select m from Member m left join m.team t" // left join

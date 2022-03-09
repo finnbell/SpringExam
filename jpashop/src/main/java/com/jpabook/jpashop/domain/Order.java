@@ -1,7 +1,5 @@
 package com.jpabook.jpashop.domain;
 
-import com.jpabook.jpashop.domain.item.Delivery;
-import com.jpabook.jpashop.domain.item.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,7 +39,7 @@ public class Order {
     private OrderStatus status;   // 주문상태 [ORDER, CANCEL]
 
 
-    //== 연관관계 메서드 == //
+    //== 연관관계 메서드 ==  (양방향일때 코드로 세팅) //
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
 
