@@ -48,10 +48,13 @@ class MemberServiceTest {
 
         Assertions.assertThrows(IllegalStateException.class, () -> {
             memberService.join(member2);
+
+            //then
+            Assertions.fail("예외가 발생해야 한다");
+
         } );
 
-        //then
-//        Assertions.fail("예외가 발생해야 한다");
+
     }
 
 

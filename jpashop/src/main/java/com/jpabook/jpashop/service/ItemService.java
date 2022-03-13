@@ -1,31 +1,33 @@
 package com.jpabook.jpashop.service;
 
-import com.jpabook.jpashop.domain.item.item;
-import com.jpabook.jpashop.repository.itemrepository;
-import lombok.requiredargsconstructor;
-import org.springframework.stereotype.service;
-import org.springframework.transaction.annotation.transactional;
 
-import java.util.list;
+import com.jpabook.jpashop.domain.item.Item;
+import com.jpabook.jpashop.repository.ItemRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@service
-@transactional(readonly = true)
-@requiredargsconstructor
-public class itemservice {
+import java.util.List;
 
-    private final itemrepository itemrepository;
+@Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
+public class ItemService {
 
-    @transactional
-    public void saveitem(item item) {
-        itemrepository.save(item) ;
+    private final ItemRepository itemRepository;
+
+
+    @Transactional
+    public void saveItem(Item item) {
+        itemRepository.save(item) ;
     }
 
-    public list<item> finditems() {
-        return itemrepository.findall();
+    public List<Item> findItems() {
+        return itemRepository.findAll();
     }
 
-    public item findone(long itemid)  {
-        return itemrepository.findone(itemid);
+    public Item findOne(long itemId)  {
+        return itemRepository.findOne(itemId);
     }
 
 }
