@@ -15,11 +15,38 @@ import javax.validation.Valid;
 public class MemberApiController {
     private final MemberService memberService;
 
+    /**
+     * Entity 노출
+     * @param member
+     * @return
+     */
     @PostMapping("/api/v1/members")
     public CreateMemberResponse saveMemberV1(@RequestBody @Valid Member member) {
         Long id = memberService.join(member);
 
         return new CreateMemberResponse(id);
+    }
+
+
+    /**
+     * Entity 와 서비스 api 레이어 분리, 항상 이렇게 사용해야 함
+     * @param request
+     * @return
+     */
+    @PostMapping("/api/v2/members")
+    public CreateMemberResponse saveMemberV2(@RequestBody @Valid CreateMemberRequest request) {
+
+        Member member = new Member();
+        member.setName(request.getName());
+
+        Long id = memberService.join(member);
+        return new CreateMemberResponse(id);
+    }
+
+
+    @Data
+    static class CreateMemberRequest {
+        private String name;
     }
 
 
