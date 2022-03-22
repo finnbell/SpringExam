@@ -43,8 +43,6 @@ public class Order {
 
 
     //== 연관관계 메서드 ==  (양방향일때 코드로 세팅) //
-    @OneToMany(mappedBy = "member")
-    private List<Order> orders = new ArrayList<>();
 
     public void setMember(Member member) {
         this.member = member;

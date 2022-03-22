@@ -52,14 +52,14 @@ public class ItemController {
 
         BookForm form = new BookForm();
         form.setId(item.getId());
-        form.setName(form.getName());
-        form.setPrice(form.getPrice());
+        form.setName(item.getName());
+        form.setPrice(item.getPrice());
         form.setStockQuantity(item.getStockQuantity());
         form.setAuthor(item.getAuthor());
-        form.setIsbn(form.getIsbn());
+        form.setIsbn(item.getIsbn());
 
-        model.addAttribute("form",form);
-        return "/items/updateItemForm";
+        model.addAttribute("form", form);
+        return "items/updateItemForm";
     }
 
     @PostMapping("items/{itemId}/edit")
@@ -67,7 +67,7 @@ public class ItemController {
 
         itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
 
-        return "redirect:items";
+        return "redirect:/items";
     }
 
 

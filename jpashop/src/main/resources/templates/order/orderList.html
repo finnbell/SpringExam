@@ -22,7 +22,7 @@
                         <!--/*@thymesVar id="OrderStatus" type=""*/-->
                         <!--/*@thymesVar id="values" type=""*/-->
                         <!--/*@thymesVar id="status" type=""*/-->
-                        <option th:each="status : ${T(jpabook.jpashop.domain.OrderStatus).values()}"
+                        <option th:each="status : ${T(com.jpabook.jpashop.domain.OrderStatus).values()}"
                                 th:value="${status}"
                                 th:text="${status}">option
                         </option>

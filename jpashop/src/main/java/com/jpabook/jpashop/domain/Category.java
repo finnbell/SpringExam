@@ -36,8 +36,6 @@ public class Category {
     private List<Category> child = new ArrayList<>();
 
 
-    @OneToMany(mappedBy="parent")
-    private List<Category> categories = new ArrayList<>();
 
 
 

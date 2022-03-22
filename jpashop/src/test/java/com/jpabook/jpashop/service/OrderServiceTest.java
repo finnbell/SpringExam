@@ -4,7 +4,7 @@ import com.jpabook.jpashop.domain.Address;
 import com.jpabook.jpashop.domain.Member;
 import com.jpabook.jpashop.domain.Order;
 import com.jpabook.jpashop.domain.OrderStatus;
-import com.jpabook.jpashop.domain.exception.NotEnoughStockException;
+import com.jpabook.jpashop.exception.NotEnoughStockException;
 import com.jpabook.jpashop.domain.item.Book;
 import com.jpabook.jpashop.domain.item.Item;
 import com.jpabook.jpashop.repository.OrderRepository;
@@ -53,22 +53,6 @@ class OrderServiceTest {
 
     }
 
-    private Book CreateBook(String name, int price, int stockQuantity) {
-        Book book = new Book();
-        book.setName(name);
-        book.setPrice(price);
-        book.setStockQuantity(stockQuantity);
-        em.persist(book);
-        return book;
-    }
-
-    private Member CreateMember() {
-        Member member = new Member();
-        member.setName("회원1");
-        member.setAddress(new Address("서울", "강가", "123-123"));
-        em.persist(member);
-        return member;
-    }
 
 
     @Test
@@ -106,7 +90,7 @@ class OrderServiceTest {
 
         //when
         //다시 취소하고
-        orderService.cancenOrder(orderId);
+        orderService.cancelOrder(orderId);
 
 
 
@@ -120,6 +104,22 @@ class OrderServiceTest {
 
     }
 
+    private Book CreateBook(String name, int price, int stockQuantity) {
+        Book book = new Book();
+        book.setName(name);
+        book.setPrice(price);
+        book.setStockQuantity(stockQuantity);
+        em.persist(book);
+        return book;
+    }
+
+    private Member CreateMember() {
+        Member member = new Member();
+        member.setName("회원1");
+        member.setAddress(new Address("서울", "강가", "123-123"));
+        em.persist(member);
+        return member;
+    }
 
 
 }
