@@ -9,6 +9,7 @@ import study.datajpa.entity.Member;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
@@ -20,7 +21,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Member> findByUsername(@Param("username") String username);
 
     @Query("select m from Member m where m.username = :username and m.age = :age")
-    List<Member> findUser(@Param("username") String username, @Param("age")int age);
+    List<Member> findUser(@Param("username") String username, @Param("age") int age);
 
     @Query("select m.username from Member m")
     List<String> findUsernameList();
@@ -30,5 +31,11 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("select m from Member m where m.username in :names")
     List<Member> findByNames(@Param("names") Collection<String> names);
+
+    List<Member> findListByUsername(String username);  //컬렉션
+
+    Member findMemberByUsername(String username);  //단건
+
+    Optional<Member> findOptionalByUsername(String username);  //단건 Optional
 
 }
