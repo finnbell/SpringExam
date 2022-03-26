@@ -336,6 +336,11 @@ class MemberRepositoryTest {
 
     }
 
+    @Test
+    void callCustom() {
+        List<Member> result = memberRepository.findMemberCustom();
+    }
+
 
 
 }
