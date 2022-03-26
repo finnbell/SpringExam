@@ -3,8 +3,6 @@ package study.datajpa.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -16,7 +14,7 @@ import java.util.List;
         query = "select m from Member m where m.username = :username"
 )
 @NamedEntityGraph(name = "Member.all", attributeNodes = @NamedAttributeNode("team") )
-public class Member {
+public class Member extends JpaBaseEntity {
 
     @Id
     @GeneratedValue
