@@ -2,6 +2,7 @@ package study.querydsl;
 
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import study.querydsl.entity.Member;
+import study.querydsl.entity.QMember;
 import study.querydsl.entity.Team;
 
 import javax.persistence.EntityManager;
@@ -368,7 +370,111 @@ public class QuerydslBasicTest {
     }
 
 
+    @Test
+    void subQuery() throws Exception {
 
+        QMember memberSub = new QMember("memberSub");
+
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .where(member.age.eq(
+                        JPAExpressions
+                                .select(memberSub.age.max())
+                                .from(memberSub)
+                ))
+                .fetch();
+
+        assertThat(result).extracting("age")
+                .containsExactly(40);
+    }
+
+    /**
+     * 나이가 평균 이상인 회원    GoE  Greater or Equal 크거나 같은 조건
+     * @throws Exception
+     */
+    @Test
+    void subQueryGoe() throws Exception {
+
+        QMember memberSub = new QMember("memberSub");
+
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .where(member.age.goe(
+                        JPAExpressions
+                                .select(memberSub.age.avg())
+                                .from(memberSub)
+                ))
+                .fetch();
+
+        assertThat(result).extracting("age")
+                .containsExactly(30,40);
+    }
+
+
+    /**
+     * 나이가 평균 이상인 회원    GoE  Greater or Equal 크거나 같은 조건
+     * @throws Exception
+     *
+     * select member0_.member_id as member_i1_1_, member0_.age as age2_1_, member0_.team_id as team_id4_1_, member0_.username as username3_1_
+     * from member member0_
+     * where member0_.age
+     * in
+     * (select member1_.age from member member1_ where member1_.age>10);
+     */
+    @Test
+    void subQueryIn() throws Exception {
+
+        QMember memberSub = new QMember("memberSub");
+
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .where(member.age.in(
+                        JPAExpressions
+                                .select(memberSub.age)
+                                .from(memberSub)
+                        .where(memberSub.age.gt(10))
+                ))
+                .fetch();
+
+        assertThat(result).extracting("age")
+                .containsExactly(20,30,40);
+    }
+
+
+    /**
+     *
+     * select member0_.username as col_0_0_,
+     * (select avg(cast(member1_.age as double)) from member member1_) as col_1_0_
+     * from member member0_;
+     *
+     * from 절의 서브쿼리 한계
+     * JPA JPQL 은   FROM 절(인라인뷰) 지원하지 않는다.
+     * Querydsl 도 지원하지 않음.
+     *  해결방안
+     *   1. 서브쿼리를 join 으로 변경 (가능 할수도 있고, 불가능한 상황도 있다.)
+     *   2. 애플리케이션에서 쿼리를 2번 분리해서 실행
+     *   3. native SQL (mybatis, jdbcTemplate) 사용한다.
+     *
+     * @throws Exception
+     */
+    @Test
+    void selectSubQuery() throws Exception {
+
+        QMember memberSub = new QMember("memberSub");
+
+        List<Tuple> result = queryFactory
+                .select(member.username,
+                        JPAExpressions
+                                .select(memberSub.age.avg())
+                                .from(memberSub)
+                ).from(member)
+                .fetch();
+
+        for (Tuple tuple : result) {
+            System.out.println("tuple = "+ tuple);
+        }
+
+    }
 
 
 
