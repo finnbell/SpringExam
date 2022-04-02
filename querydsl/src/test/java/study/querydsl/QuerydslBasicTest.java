@@ -3,6 +3,7 @@ package study.querydsl;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.hibernate.boot.TempTableDdlTransactionHandling;
@@ -514,6 +515,44 @@ public class QuerydslBasicTest {
     }
 
 
+
+    @Test
+    void constant() throws Exception {
+
+        List<Tuple> result = queryFactory
+                .select(member.username, Expressions.constant("A"))
+                .from(member)
+                .fetch();
+
+        for (Tuple tuple : result) {
+            System.out.println("tuple = " + tuple);
+        }
+
+    }
+
+    /**
+     * select ((member0_.username||'_')||cast(member0_.age as char)) as col_0_0_
+     * from member member0_
+     * where member0_.username='member1';
+     *
+     * @throws Exception
+     */
+    @Test
+    void concat() throws Exception {
+
+        //{username}_{age}
+        List<String> result = queryFactory
+                .select(member.username.concat("_").concat(member.age.stringValue()))
+                .from(member)
+                .where(member.username.eq("member1"))
+                .fetch();
+
+
+        for (String s : result) {
+            System.out.println("s = " + s);
+        }
+
+    }
 
 
 
