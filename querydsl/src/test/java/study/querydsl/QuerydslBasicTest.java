@@ -3,14 +3,12 @@ package study.querydsl;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.hibernate.boot.TempTableDdlTransactionHandling;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import study.querydsl.entity.Member;
-import study.querydsl.entity.QTeam;
 import study.querydsl.entity.Team;
 
 import javax.persistence.EntityManager;
@@ -169,8 +167,6 @@ public class QuerydslBasicTest {
                 .fetch();
 
         assertThat(result.size()).isEqualTo(2);
-
-
     }
 
     @Test
@@ -232,6 +228,108 @@ public class QuerydslBasicTest {
 
         assertThat(teamB.get(team.name)).isEqualTo("teamB");
         assertThat(teamB.get(member.age.avg())).isEqualTo(35);    // (30 + 40 ) / 2
+    }
+
+
+    @Test
+    void join() throws Exception {
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .leftJoin(member.team, team)            // 그냥 join 은 inner join 임.
+                .where(team.name.eq("teamA"))
+                .fetch();
+
+        assertThat(result)
+                .extracting("username")
+                .containsExactly("member1", "member2");
 
     }
+
+
+    /**
+     * 세타 조인   (cross join)
+     * 회원의 이름이 팀 이름과 같은 회원 조회
+     * @throws Exception
+     */
+
+    @Test
+    void theta_join() throws Exception {
+
+        em.persist(new Member("teamA"));
+        em.persist(new Member("teamB"));
+        em.persist(new Member("teamC"));
+
+
+        List<Member> result = queryFactory
+                .select(member)
+                .from(member, team)
+                .where(member.username.eq(team.name))
+                .fetch();
+
+
+        assertThat(result)
+                .extracting("username")
+                .containsExactly("teamA", "teamB");
+
+    }
+
+
+    /**
+     * 예) 회원과 팀을 조인하면서, 팀 이름이 teamA인 팀만 조인, 회원은 모두 조회
+     * jpql : select m, t from Member m left join m.team t on t.name = 'teamA'
+     * @throws Exception
+     */
+    @Test
+    void join_on_filtering() throws Exception {
+        List<Tuple> result = queryFactory
+                .select(member, team)
+                .from(member)
+                .leftJoin(member.team, team).on(team.name.eq("teamA"))
+                .fetch();
+
+
+        for (Tuple tuple : result) {
+            System.out.println("tuple = " + tuple);
+
+        }
+
+    }
+
+
+    /**
+     * 연관 관계가 없는 엔티티 외부 조인  (막 조인)
+     * 회원의 이름이 팀 이름과 같은 대상 외부 조인
+     * @throws Exception
+     */
+
+    @Test
+    void join_on_no_relation() throws Exception {
+
+        em.persist(new Member("teamA"));
+        em.persist(new Member("teamB"));
+        em.persist(new Member("teamC"));
+
+        List<Tuple> result = queryFactory
+                .select(member, team)
+                .from(member)
+                .leftJoin(team).on(member.username.eq(team.name))
+                .fetch();
+
+
+        for (Tuple tuple : result) {
+            System.out.println("tuple = "+ tuple);
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
 }
