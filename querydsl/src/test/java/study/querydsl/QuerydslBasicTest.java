@@ -762,5 +762,54 @@ public class QuerydslBasicTest {
     }
 
 
+    @Test
+    void bulkUpdate() {
+
+        //member1 = 10 -> DB member1
+        //member2 = 20 -> DB member2
+        //member3 = 30 -> DB member3
+        //member4 = 40 -> DB member4
+
+        long count = queryFactory
+                .update(member)
+                .set(member.username,"비회원")
+                .where(member.age.lt(28))
+                .execute();
+
+        // bulk 연산 실행후, 영속성 컨텍스트 동기화 해야 함.  주의!
+        em.flush();
+        em.clear();
+
+        //1 member1 = 10 -> DB 비회원
+        //2 member2 = 20 -> DB 비회원
+        //3 member3 = 30 -> DB member3
+        //4 member4 = 40 -> DB member4
+
+        List<Member> result = queryFactory
+                .selectFrom(member)
+                .fetch();
+
+        for (Member member1 : result) {
+            System.out.println("member1 = "+ member1 );
+        }
+    }
+
+
+    @Test
+    void bulkAdd() {
+        long count = queryFactory
+                .update(member)
+                .set(member.age, member.age.add(1))   // set age = age+1   ,  multiply 가능
+                .execute();
+    }
+
+    @Test
+    void bulkDelete() {
+        queryFactory
+                .delete(member)
+                .where(member.age.gt(18))
+                .execute();
+    }
+
 
 }
