@@ -12,6 +12,7 @@ import study.querydsl.dto.MemberTeamDto;
 import study.querydsl.entity.Member;
 import study.querydsl.entity.QMember;
 import study.querydsl.entity.Team;
+import study.querydsl.repository.support.Querydsl4RepositorySupport;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -20,13 +21,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @Transactional
-class MemberRepositoryTest {
+class MemberRepositoryTest  {
 
     @Autowired
     EntityManager em;
 
     @Autowired
     MemberRepository memberRepository;
+
+
 
 
     @Test
