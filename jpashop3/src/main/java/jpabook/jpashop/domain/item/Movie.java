@@ -6,7 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@DiscriminatorValue("A")
+@DiscriminatorValue("M")
 @Getter
 @Setter
 public class Movie extends  Item {
