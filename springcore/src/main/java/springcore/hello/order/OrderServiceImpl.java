@@ -1,15 +1,19 @@
 package springcore.hello.order;
 
 import springcore.hello.discount.DisocuntPolicy;
-import springcore.hello.discount.FixDiscountPolicy;
 import springcore.hello.member.Member;
 import springcore.hello.member.MemberRepository;
-import springcore.hello.member.MemoryMemberRepository;
 
 public class OrderServiceImpl implements OrderService {
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
-    private final DisocuntPolicy disocuntPolicy = new FixDiscountPolicy();
+    private final MemberRepository memberRepository;
+    private final DisocuntPolicy disocuntPolicy;
+
+
+    public OrderServiceImpl(MemberRepository memberRepository, DisocuntPolicy disocuntPolicy) {
+        this.memberRepository = memberRepository;
+        this.disocuntPolicy = disocuntPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
