@@ -2,8 +2,7 @@ package springcore.hello;
 
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
-import springcore.hello.discount.DisocuntPolicy;
-import springcore.hello.discount.FixDiscountPolicy;
+import springcore.hello.discount.DiscountPolicy;
 import springcore.hello.discount.RateDiscountPolicy;
 import springcore.hello.member.MemberRepository;
 import springcore.hello.member.MemberService;
@@ -31,7 +30,7 @@ public class AppConfig {
     }
 
     @Bean
-    private DisocuntPolicy disocuntPolicy() {
+    private DiscountPolicy disocuntPolicy() {
 //        return new FixDiscountPolicy();
         return new RateDiscountPolicy();
     }

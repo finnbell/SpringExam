@@ -6,10 +6,9 @@ import org.springframework.beans.factory.NoUniqueBeanDefinitionException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springcore.hello.discount.DisocuntPolicy;
+import springcore.hello.discount.DiscountPolicy;
 import springcore.hello.discount.FixDiscountPolicy;
 import springcore.hello.discount.RateDiscountPolicy;
-import springcore.hello.member.MemberRepository;
 
 import java.util.Map;
 
@@ -25,14 +24,14 @@ public class ApplicationContextExtendsFindTest {
     @DisplayName("부모 타입으로 조회시, 자식이 둘 이상이면, 중복 오류가 발생한다")
     void findBeanByParentTypeDuplicate() {
         assertThrows(NoUniqueBeanDefinitionException.class,
-                () -> ac.getBean(DisocuntPolicy.class));
+                () -> ac.getBean(DiscountPolicy.class));
     }
 
 
     @Test
     @DisplayName("부모 타입으로 조회시, 자식이 둘 이상이면, 빈 이름을 지정하면 된다")
     void findBeanByParentTypeBeanName() {
-        DisocuntPolicy rateDiscountPolicy = ac.getBean("rateDiscountPolicy",DisocuntPolicy.class);
+        DiscountPolicy rateDiscountPolicy = ac.getBean("rateDiscountPolicy", DiscountPolicy.class);
         assertThat(rateDiscountPolicy).isInstanceOf(RateDiscountPolicy.class);
     }
 
@@ -47,7 +46,7 @@ public class ApplicationContextExtendsFindTest {
     @Test
     @DisplayName("부모 타입으로 모두 조회하기")
     void findAllBeanByParentType() {
-        Map<String, DisocuntPolicy> beansOfType = ac.getBeansOfType(DisocuntPolicy.class);
+        Map<String, DiscountPolicy> beansOfType = ac.getBeansOfType(DiscountPolicy.class);
         assertThat(beansOfType.size()).isEqualTo(2);
 
         for (String key : beansOfType.keySet()) {
@@ -74,12 +73,12 @@ public class ApplicationContextExtendsFindTest {
     static class TestConfig {
 
         @Bean
-        public DisocuntPolicy rateDiscountPolicy() {
+        public DiscountPolicy rateDiscountPolicy() {
             return new RateDiscountPolicy();
         }
 
         @Bean
-        public DisocuntPolicy fixDiscountPolicy() {
+        public DiscountPolicy fixDiscountPolicy() {
             return new FixDiscountPolicy();
         }
 
