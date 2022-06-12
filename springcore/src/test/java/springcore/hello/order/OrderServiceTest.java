@@ -4,10 +4,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import springcore.hello.AppConfig;
-import springcore.hello.member.Grade;
-import springcore.hello.member.Member;
-import springcore.hello.member.MemberService;
-import springcore.hello.member.MemberServiceImpl;
+import springcore.hello.discount.FixDiscountPolicy;
+import springcore.hello.member.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,4 +37,18 @@ class OrderServiceTest {
 
 
     }
+
+    @Test
+    void fieldInjectionTest() {
+        OrderServiceImpl orderService = new OrderServiceImpl();
+
+        orderService.setMemberRepository(new MemoryMemberRepository());
+        orderService.setDiscountPolicy(new FixDiscountPolicy());
+
+        orderService.createOrder(1L, "itemA", 10000);
+    }
+
+
+
+
 }
