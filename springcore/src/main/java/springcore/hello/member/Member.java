@@ -1,13 +1,13 @@
 package springcore.hello.member;
 
-import java.awt.*;
-
 public class Member {
 
     private Long id;
     private String name;
     private Grade grade;
 
+    public Member() {
+    }
 
     public Member(Long id, String name, Grade grade) {
         this.id = id;

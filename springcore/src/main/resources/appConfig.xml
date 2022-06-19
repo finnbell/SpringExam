@@ -11,7 +11,7 @@
     <bean id="memberRepository" class="springcore.hello.member.MemoryMemberRepository"/>
 
 
-    <bean id="orderServide" class="springcore.hello.order.OrderServiceImpl">
+    <bean id="orderService" class="springcore.hello.order.OrderServiceImpl">
         <constructor-arg name="memberRepository" ref="memberRepository"/>
         <constructor-arg name="discountPolicy" ref="discountPolicy"/>
     </bean>

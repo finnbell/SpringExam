@@ -1,6 +1,7 @@
 package springcore.hello.discount;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import springcore.hello.member.Grade;
 import springcore.hello.member.Member;

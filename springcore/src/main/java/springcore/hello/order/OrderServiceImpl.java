@@ -1,6 +1,7 @@
 package springcore.hello.order;
 
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -10,19 +11,21 @@ import springcore.hello.member.Member;
 import springcore.hello.member.MemberRepository;
 
 @Component
+@RequiredArgsConstructor
+@Setter
 public class OrderServiceImpl implements OrderService {
 
     private MemberRepository memberRepository;
     private DiscountPolicy discountPolicy;
 
-    public OrderServiceImpl() {
-    }
+//    public OrderServiceImpl() {
+//    }
 
-    @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
-        this.memberRepository = memberRepository;
-        this.discountPolicy = discountPolicy;
-    }
+//    @Autowired
+//    public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
+//        this.memberRepository = memberRepository;
+//        this.discountPolicy = discountPolicy;
+//    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
