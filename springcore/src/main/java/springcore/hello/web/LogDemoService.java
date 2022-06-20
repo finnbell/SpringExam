@@ -10,11 +10,11 @@ import springcore.hello.common.MyLogger;
 @RequiredArgsConstructor
 public class LogDemoService {
 
-    private final ObjectProvider<MyLogger> myLoggerProvider;
+    private final MyLogger myLogger;
 
     public void logic(String id) {
 
-        MyLogger myLogger = myLoggerProvider.getObject();
+//        MyLogger myLogger = myLogger.getObject();
         myLogger.log("service id = " + id);
     }
 }
