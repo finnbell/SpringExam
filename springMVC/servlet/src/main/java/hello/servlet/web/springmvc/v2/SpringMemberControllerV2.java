@@ -42,7 +42,7 @@ public class SpringMemberControllerV2 {
 
 
     @RequestMapping
-    public ModelAndView list() {
+    public ModelAndView members() {
 
         List<Member> members = memberRepository.findAll();
 
