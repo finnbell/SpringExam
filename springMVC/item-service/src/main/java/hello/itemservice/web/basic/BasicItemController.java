@@ -78,13 +78,18 @@ public class BasicItemController {
         return "basic/item";
     }
 
-    @PostMapping("/add")
+//    @PostMapping("/add")   //refresh 시 상품이 중복 저장되는 문제 발생
     public String addItemV4(Item item) {
         itemRepository.save(item);
         return "basic/item";
     }
 
 
+    @PostMapping("/add")   // refresh 상품 중복문제는  PRG(Post/Redirect/Get) 으로 해결함
+    public String addItemV5(Item item) {
+        itemRepository.save(item);
+        return "redirect:/basic/items/" + item.getId();
+    }
 
     @GetMapping("/{itemId}/edit")
     public String editForm(@PathVariable Long itemId, Model model) {
