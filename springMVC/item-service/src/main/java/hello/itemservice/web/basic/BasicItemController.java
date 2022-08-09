@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -85,11 +86,24 @@ public class BasicItemController {
     }
 
 
-    @PostMapping("/add")   // refresh 상품 중복문제는  PRG(Post/Redirect/Get) 으로 해결함
+//    @PostMapping("/add")   // refresh 상품 중복문제는  PRG(Post/Redirect/Get) 으로 해결함
     public String addItemV5(Item item) {
         itemRepository.save(item);
         return "redirect:/basic/items/" + item.getId();
     }
+
+
+
+    @PostMapping("/add")
+    public String addItemV6(Item item, RedirectAttributes redirectAttributes) {
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId());
+        redirectAttributes.addAttribute("status", true);
+        return "redirect:/basic/items/{itemId}";
+
+        //http://localhost:8080/basic/items/3/status?true   형식으로 출력됨,  URL 인코딩   pathVariable, 쿼리 파라미터까지 처리해준다.
+    }
+
 
     @GetMapping("/{itemId}/edit")
     public String editForm(@PathVariable Long itemId, Model model) {
