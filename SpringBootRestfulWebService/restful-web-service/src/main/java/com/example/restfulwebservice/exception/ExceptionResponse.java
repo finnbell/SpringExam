@@ -10,8 +10,14 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ExceptionResponse {
+
+        public enum ERROR_TYPE {
+            SERVER_ERROR,
+            NOT_FOUND
+        };
+
     private Date timeStamp;
-    private String type;
+    private ERROR_TYPE type;
     private String message;
     private String details;
 }
