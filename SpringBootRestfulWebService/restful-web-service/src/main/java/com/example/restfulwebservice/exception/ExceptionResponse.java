@@ -13,7 +13,8 @@ public class ExceptionResponse {
 
         public enum ERROR_TYPE {
             SERVER_ERROR,
-            NOT_FOUND
+            NOT_FOUND,
+            ARGUMENT_NOT_VALID,
         };
 
     private Date timeStamp;

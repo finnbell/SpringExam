@@ -1,8 +1,10 @@
 package com.example.restfulwebservice.exception;
 
 import com.example.restfulwebservice.user.UserNotFoundException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -31,6 +33,19 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
                 new ExceptionResponse(new Date(), ExceptionResponse.ERROR_TYPE.NOT_FOUND ,ex.getMessage(), request.getDescription(false));
 
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @Override   // 컴팔 에러는 없지만  override 추가해주는 습관을 가지자
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+                                                                  HttpHeaders headers,
+                                                                  HttpStatus status,
+                                                                  WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
+                ExceptionResponse.ERROR_TYPE.ARGUMENT_NOT_VALID,
+                "Validation Failed",
+                ex.getBindingResult().toString());
+
+        return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
 
