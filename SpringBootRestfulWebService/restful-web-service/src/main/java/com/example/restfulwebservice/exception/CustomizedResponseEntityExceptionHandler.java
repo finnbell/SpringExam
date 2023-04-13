@@ -21,7 +21,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(new Date(),  ExceptionResponse.ERROR_TYPE.SERVER_ERROR, ex.getMessage(), request.getDescription(false));
+                new ExceptionResponse(new Date(),  ERROR_TYPE.SERVER_ERROR, ex.getMessage(), request.getDescription(false));
 
         return new ResponseEntity(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -30,7 +30,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     @ExceptionHandler(UserNotFoundException.class)
     public final ResponseEntity<Object> handleUserNotFoundException(Exception ex, WebRequest request)  {
         ExceptionResponse exceptionResponse =
-                new ExceptionResponse(new Date(), ExceptionResponse.ERROR_TYPE.NOT_FOUND ,ex.getMessage(), request.getDescription(false));
+                new ExceptionResponse(new Date(), ERROR_TYPE.NOT_FOUND ,ex.getMessage(), request.getDescription(false));
 
         return new ResponseEntity(exceptionResponse, HttpStatus.NOT_FOUND);
     }
@@ -41,7 +41,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
                                                                   HttpStatus status,
                                                                   WebRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(),
-                ExceptionResponse.ERROR_TYPE.ARGUMENT_NOT_VALID,
+                ERROR_TYPE.ARGUMENT_NOT_VALID,
                 "Validation Failed",
                 ex.getBindingResult().toString());
 
