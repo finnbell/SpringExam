@@ -16,6 +16,10 @@ spring:
     user:
       name: username
       password: passw0rd
+  datasource:
+    hikari:
+      jdbc-url: jdbc:h2:mem:testdb
+      username: sa
 
 management:
   endpoints:
