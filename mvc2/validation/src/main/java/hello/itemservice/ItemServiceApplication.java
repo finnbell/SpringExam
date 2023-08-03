@@ -13,9 +13,4 @@ public class ItemServiceApplication implements WebMvcConfigurer {
 		SpringApplication.run(ItemServiceApplication.class, args);
 	}
 
-	@Override	//모든 컨트롤러에서 사용 가능
-	public Validator getValidator() {
-		return new ItemValidator();
-	}
-
 }
