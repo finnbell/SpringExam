@@ -1,11 +1,13 @@
 package hello.jdbc.exception.basic;
 
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.net.ConnectException;
 import java.sql.SQLException;
 
+@Slf4j
 public class UnCheckedApp {
 
 
@@ -14,6 +16,17 @@ public class UnCheckedApp {
         Controller controller = new Controller();
         Assertions.assertThatThrownBy(() -> controller.request())
                 .isInstanceOf(RuntimeException.class);
+    }
+
+    @Test
+    void printExc() {
+        Controller controller = new Controller();
+
+        try {
+            controller.request();
+        }catch(Exception e) {
+            log.info("ex",e);
+        }
     }
 
     static class Controller {
@@ -48,6 +61,7 @@ public class UnCheckedApp {
                 runSQL();
             } catch (SQLException e) {
                 //SQLException 발생시 RuntimeException 으로 바꿔서 날린다.
+                // 인자로 e 를 꼭 넣도록 하자!  그래야 Caused by ~~ 가 떠서 에러 확인이 쉽다.
                 throw new RuntimeException(e);
             }
         }
@@ -65,6 +79,9 @@ public class UnCheckedApp {
     }
 
     static class RuntimeSQLException extends  RuntimeException {
+        public RuntimeSQLException() {
+        }
+
         public RuntimeSQLException(Throwable cause) {
             super(cause);
         }
