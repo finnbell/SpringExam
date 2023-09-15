@@ -62,7 +62,7 @@ public class UnCheckedApp {
             } catch (SQLException e) {
                 //SQLException 발생시 RuntimeException 으로 바꿔서 날린다.
                 // 인자로 e 를 꼭 넣도록 하자!  그래야 Caused by ~~ 가 떠서 에러 확인이 쉽다.
-                throw new RuntimeException(e);
+                throw new RuntimeSQLException(e);
             }
         }
 
