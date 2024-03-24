@@ -7,7 +7,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 class ProductOrderServiceApplicationTests {
 
     @Test
-    void contextLoads() {
+    void 상품조회() {
+        //상품 등록
+
+
+        //상품을 조회
+
+        //상품의 응답을 검증
     }
 
 }
