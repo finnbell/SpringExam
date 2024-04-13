@@ -1,7 +1,6 @@
 package com.example.productorderservice;
 
 
-import com.example.productorderservice.DatabaseCleanup;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
