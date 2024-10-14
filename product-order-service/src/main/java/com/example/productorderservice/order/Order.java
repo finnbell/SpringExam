@@ -1,12 +1,25 @@
 package com.example.productorderservice.order;
 
 import com.example.productorderservice.product.Product;
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
 
-class Order {
+@Entity
+@Table(name="orders")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private final Product product;
-    private final int quantity;
+
+    @OneToOne
+    private Product product;
+
+    private int quantity;
 
     public Order(final Product product, final int quantity) {
         Assert.notNull(product, "상품은 필수입니다.");
@@ -15,11 +28,7 @@ class Order {
         this.quantity = quantity;
     }
 
-    public void assignId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
+    public int getTotalPrice() {
+        return product.getDiscountPrice() * quantity;
     }
 }

@@ -42,5 +42,7 @@ class Product {
     }
 
 
-
+    public int getDiscountPrice() {
+        return discountPolicy.applyDiscount(price);
+    }
 }
